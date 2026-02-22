@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leona Technical Specs | Bilgin Yachts</title>
+    <style>
+        /* CSS Variables - Keeping your vibrant red accent */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-main: #222222;
+            --accent-gold: #c8102e; /* The red hull color */
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --dark-contrast: #111111;
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e4ede8 0%, #f4f7f6 100%);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- PRELOADER --- */
+        #loader {
+            position: fixed; inset: 0; background: var(--dark-contrast);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.8s ease-out;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 3px solid rgba(200, 16, 46, 0.3);
+            border-top-color: var(--accent-gold); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* --- NAVIGATION BAR --- */
+        .top-nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5vw; background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border); z-index: 1000;
+            box-sizing: border-box; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .nav-logo {
+            font-size: 1.5rem; font-weight: bold; color: var(--dark-contrast);
+            letter-spacing: 3px; text-transform: uppercase;
+        }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            text-decoration: none; color: var(--dark-contrast); font-weight: 600;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--accent-gold); }
+
+        /* --- AMBIENT FLOATING ORBS --- */
+        .bg-circle {
+            position: fixed; border-radius: 50%; z-index: -1;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+        .bg-circle-1 {
+            top: 10%; left: -10%; width: 45vw; height: 45vw;
+            background: rgba(200, 16, 46, 0.1); filter: blur(80px);
+        }
+        .bg-circle-2 {
+            bottom: -15%; right: -5%; width: 55vw; height: 55vw;
+            background: rgba(160, 190, 220, 0.25); filter: blur(100px);
+            animation-delay: -5s;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.05); }
+        }
+
+        /* --- PARALLAX HEADER --- */
+        header {
+            height: 70vh; 
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; position: relative; overflow: hidden;
+            padding-top: 80px;
+        }
+        .parallax-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 120%;
+            /* Replace with an exterior profile or blueprint shot later! */
+            background: url('https://images.unsplash.com/photo-1520690011500-2f9fc1186719?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            z-index: -2; transform: translateZ(0);
+        }
+
+        .hero-glass {
+            background: var(--glass-bg); backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border);
+            padding: 4rem 6rem; border-radius: 20px; box-shadow: var(--glass-shadow);
+        }
+        h1 {
+            font-size: 4rem; margin: 0; letter-spacing: 6px;
+            color: var(--dark-contrast); text-transform: uppercase;
+        }
+        .subtitle {
+            font-size: 1.2rem; color: var(--accent-gold); letter-spacing: 3px;
+            margin-top: 10px; font-weight: bold;
+        }
+
+        /* --- SECTIONS & GLASS CARDS --- */
+        section { padding: 80px 5vw; display: flex; flex-direction: column; align-items: center; }
+        
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 50px; box-shadow: var(--glass-shadow);
+            max-width: 1000px; width: 100%; margin-bottom: 40px;
+            opacity: 0; transform: translateY(60px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .glass-card.visible { opacity: 1; transform: translateY(0); }
+        .glass-card:hover { box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12); }
+
+        .glass-card h2 {
+            color: var(--dark-contrast); font-size: 2.5rem;
+            border-bottom: 3px solid var(--accent-gold); padding-bottom: 12px; margin-top: 0;
+            display: inline-block;
+        }
+        .glass-card p { font-size: 1.15rem; line-height: 1.9; color: #333; margin-bottom: 25px; }
+
+        /* --- STATS GRID --- */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px; margin-top: 30px;
+        }
+        .stat-item {
+            background: rgba(255, 255, 255, 0.5); padding: 25px 20px;
+            border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.8);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .stat-item:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.8); }
+        .stat-value { font-size: 2.2rem; font-weight: bold; color: var(--accent-gold); }
+        .stat-label {
+            font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--dark-contrast); margin-top: 8px; font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <nav class="top-nav">
+        <div class="nav-logo">LEONA</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="interior.html">Interior</a>
+            <a href="technical.html">Technical</a>
+            <a href="bridge.html">Bridge</a>
+            <a href="engine-room.html">Engine Room</a>
+        </div>
+    </nav>
+
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+
+    <header>
+        <div class="parallax-bg" id="parallax"></div>
+        <div class="hero-glass observer-item">
+            <h1>Technical</h1>
+            <div class="subtitle">Engineering & Fluid Dynamics</div>
+        </div>
+    </header>
+
+    <section>
+        <div class="glass-card observer-item">
+            <h2>Computational Fluid Dynamics (CFD)</h2>
+            <p>The core of Leona's performance stems from rigorous structural and fluid flow analysis. Built with a displacement steel hull and an aluminum superstructure, her center of gravity is meticulously optimized. The striking "bullet-shaped" profile isn't just aesthetic; it underwent extensive Computational Fluid Dynamics (CFD) testing to analyze boundary layer separation and minimize pressure drop along the hull.</p>
+            <p></p>
+            <p>The prominent bulbous bow modifies the way water flows around the hull, intentionally creating a trough that cancels out the yacht's primary bow wave. This destructive interference drastically reduces wave-making resistance, allowing the massive 1,730 GT vessel to glide efficiently with zero dynamic trim.</p>
+        </div>
+
+        <div class="glass-card observer-item">
+            <h2>Structural Engineering & Materials</h2>
+            <p>To balance structural rigidity with weight distribution, Leona utilizes a high-tensile steel hull mated to a lightweight aluminum superstructure. This multi-material approach lowers the overall center of mass, significantly improving transverse stability.</p>
+            <p>The structural framework is designed to withstand immense torsional loads encountered in heavy seas, while specialized isolation mounts decouple the machinery space from the living quarters, ensuring mechanical vibrations do not propagate through the decks.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">ABS</div>
+                    <div class="stat-label">Classification</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">Steel</div>
+                    <div class="stat-label">Hull Material</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">Aluminum</div>
+                    <div class="stat-label">Superstructure</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">3.5m</div>
+                    <div class="stat-label">Maximum Draft</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card observer-item">
+            <h2>Active Roll Stabilization</h2>
+            <p>To combat lateral rolling forces, Leona employs Quantum zero-speed fin stabilizers. Functioning similarly to aircraft ailerons, these active hydrodynamic foils utilize sensors to detect wave motion and hydraulically adjust their angle of attack in real-time.</p>
+            <p>Underway, they generate dynamic lift to counteract roll. At anchor, they perform rapid "paddling" motions against the surrounding water, creating a highly stable platform regardless of sea conditions.</p>
+        </div>
+    </section>
+
+    <script>
+        // Remove Preloader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; }, 800);
+        });
+
+        // Parallax Header Effect
+        window.addEventListener('scroll', () => {
+            const parallaxBg = document.getElementById('parallax');
+            let scrollPosition = window.pageYOffset;
+            parallaxBg.style.transform = 'translateY(' + scrollPosition * 0.4 + 'px)';
+        });
+
+        // Scroll Intersection Observer for smooth fade-ins
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.observer-item').forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
