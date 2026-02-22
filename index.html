@@ -222,6 +222,57 @@
         .dark-section .stat-item:hover { background: rgba(0, 0, 0, 0.6); }
         .dark-section .stat-label { color: #aaa; }
 
+        /* --- NAVIGATION BAR --- */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5vw;
+            background: rgba(255, 255, 255, 0.75); /* Light translucent band */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000; /* Keeps it above the images and text */
+            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-contrast);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-contrast);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold); /* This will pull the red color you just set! */
+        }
+        
+        /* Add a little padding to the top of the hero so the nav doesn't cover it */
+        header {
+            padding-top: 80px; 
+        }
+
     </style>
 </head>
 <body>
@@ -229,6 +280,16 @@
     <div id="loader">
         <div class="spinner"></div>
     </div>
+
+    <nav class="top-nav">
+        <div class="nav-logo">LEONA</div>
+        <div class="nav-links">
+            <a href="interior.html">Interior</a>
+            <a href="technical.html">Technical</a>
+            <a href="bridge.html">Bridge</a>
+            <a href="engine-room.html">Engine Room</a>
+        </div>
+    </nav>
 
     <div class="bg-circle bg-circle-1"></div>
     <div class="bg-circle bg-circle-2"></div>
