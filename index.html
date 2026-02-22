@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leona Superyacht | Bilgin Yachts</title>
+    <style>
+        /* CSS for Light Luxury Theme & Glassmorphism */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-main: #333333;
+            --accent-gold: #c5a059;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --dark-contrast: #1a1a1a;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0eaf5 0%, #f4f7f6 100%);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Background decorative floating orbs for glassmorphism to pop */
+        .bg-circle-1 {
+            position: fixed; top: -10%; left: -10%; width: 40vw; height: 40vw;
+            background: rgba(197, 160, 89, 0.15); border-radius: 50%; filter: blur(80px); z-index: -1;
+        }
+        .bg-circle-2 {
+            position: fixed; bottom: -10%; right: -10%; width: 50vw; height: 50vw;
+            background: rgba(160, 190, 220, 0.2); border-radius: 50%; filter: blur(100px); z-index: -1;
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /* Placeholder for a hero image - you can replace the URL later */
+            background: url('https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-glass {
+            position: relative;
+            z-index: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 3rem 5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeUp 1s forwards 0.5s ease-out;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: 4px;
+            color: var(--dark-contrast);
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        section {
+            padding: 100px 10vw;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .glass-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card h2 {
+            color: var(--dark-contrast);
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-top: 0;
+        }
+
+        .glass-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--dark-contrast);
+            margin-top: 5px;
+        }
+
+        .dark-section {
+            background: var(--dark-contrast);
+            color: #fff;
+        }
+
+        .dark-section .glass-card {
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-section .glass-card h2 {
+            color: #fff;
+        }
+
+        .dark-section .glass-card p {
+            color: #ccc;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-circle-1"></div>
+    <div class="bg-circle-2"></div>
+
+    <header>
+        <div class="hero-glass">
+            <h1>Leona</h1>
+            <div class="subtitle">80m Bilgin Yachts Masterpiece</div>
+        </div>
+    </header>
+
+    <section>
+        <div class="glass-card observer-item">
+            <h2>The Red Bullet</h2>
+            <p>Launched in 2023, the 80-meter Leona is the second hull in the Bilgin 263 series. Known affectionately as the "Red Bullet" due to her striking red-and-white hull, she represents the pinnacle of luxury and engineering. Her bullet-shaped profile by Unique Yacht Design ensures highly efficient cruising and an unforgettable silhouette.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">80m</div>
+                    <div class="stat-label">Length Overall</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">19 kts</div>
+                    <div class="stat-label">Top Speed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">1,730</div>
+                    <div class="stat-label">Gross Tonnage</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">5,000 nm</div>
+                    <div class="stat-label">Cruising Range</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dark-section">
+        <div class="glass-card observer-item">
+            <h2>Unprecedented Opulence</h2>
+            <p>Stepping inside the Leona is like entering a floating palace. H2 Yacht Design crafted a bold interior featuring high-gloss lacquers, backlit onyx, and 18-carat gold inlays. The beach club is the crown jewel—an 8.7-meter pool set under a fiber-optic starry night ceiling by Barrisol, surrounded by Grecian statues and a dedicated shisha lounge.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="glass-card observer-item">
+            <h2>Engineering Excellence</h2>
+            <p>Beneath the luxury lies serious mechanical prowess. Powered by twin MTU 16V 4000 M73 engines producing over 5,000 horsepower, Leona cuts through the water with zero dynamic trim. She also features a 100% clean air exhaust system compliant with IMO Tier III standards, proving that mega yachts can push towards environmental consciousness without sacrificing performance.</p>
+        </div>
+    </section>
+
+    <script>
+        // IntersectionObserver for smooth scroll fade-in animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Stop observing once visible
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.observer-item').forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
