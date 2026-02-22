@@ -89,7 +89,7 @@
         .parallax-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 120%;
             /* Replace with an exterior profile or blueprint shot later! */
-            background: url('https://images.unsplash.com/photo-1520690011500-2f9fc1186719?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            background: url('leona-launch.png') center/cover no-repeat;
             z-index: -2; transform: translateZ(0);
         }
 
@@ -143,6 +143,15 @@
         .stat-label {
             font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px;
             color: var(--dark-contrast); margin-top: 8px; font-weight: 600;
+        }
+
+        /* --- BLUEPRINT IMAGE --- */
+        .blueprint-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px; /* Rounds the corners slightly */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Adds a subtle depth */
+            margin-top: 25px; /* Gives it space from the text above */
         }
 
     </style>
@@ -212,6 +221,12 @@
             <h2>Active Roll Stabilization</h2>
             <p>To combat lateral rolling forces, Leona employs Quantum zero-speed fin stabilizers. Functioning similarly to aircraft ailerons, these active hydrodynamic foils utilize sensors to detect wave motion and hydraulically adjust their angle of attack in real-time.</p>
             <p>Underway, they generate dynamic lift to counteract roll. At anchor, they perform rapid "paddling" motions against the surrounding water, creating a highly stable platform regardless of sea conditions.</p>
+        </div>
+        <div class="glass-card observer-item" style="max-width: 1200px;">
+            <h2>General Arrangement Plan</h2>
+            <p>A detailed overview of the Leona's layout across all decks, from the tank top up to the sun deck, showcasing the intelligent utilization of her 1,730 GT internal volume.</p>
+            
+            <img src="leona-blueprints.png" alt="Leona Yacht General Arrangement Blueprint" class="blueprint-image">
         </div>
     </section>
 
