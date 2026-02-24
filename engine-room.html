@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leona Engine Room | Bilgin Yachts</title>
+    <style>
+        /* --- UNIVERSAL BOX SIZING FIX --- */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* CSS Variables */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-main: #222222;
+            --accent-gold: #c8102e; /* The red hull color */
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --dark-contrast: #111111;
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e4ede8 0%, #f4f7f6 100%);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- PRELOADER --- */
+        #loader {
+            position: fixed; inset: 0; background: var(--dark-contrast);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.8s ease-out;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 3px solid rgba(200, 16, 46, 0.3);
+            border-top-color: var(--accent-gold); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* --- NAVIGATION BAR --- */
+        .top-nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5vw; background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border); z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .nav-logo {
+            font-size: 1.5rem; font-weight: bold; color: var(--dark-contrast);
+            letter-spacing: 3px; text-transform: uppercase;
+        }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            text-decoration: none; color: var(--dark-contrast); font-weight: 600;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--accent-gold); }
+
+        /* --- AMBIENT FLOATING ORBS --- */
+        .bg-circle {
+            position: fixed; border-radius: 50%; z-index: -1;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+        .bg-circle-1 {
+            top: 10%; left: -10%; width: 45vw; height: 45vw;
+            background: rgba(200, 16, 46, 0.1); filter: blur(80px);
+        }
+        .bg-circle-2 {
+            bottom: -15%; right: -5%; width: 55vw; height: 55vw;
+            background: rgba(160, 190, 220, 0.25); filter: blur(100px);
+            animation-delay: -5s;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.05); }
+        }
+
+        /* --- PARALLAX HEADER --- */
+        header {
+            height: 70vh; 
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; position: relative; overflow: hidden;
+            padding-top: 80px;
+        }
+        .parallax-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 120%;
+            /* Placeholder for an engine room photo */
+            background: url('https://images.unsplash.com/photo-1579227114347-15d08fc37cae?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            z-index: -2; transform: translateZ(0);
+        }
+
+        .hero-glass {
+            background: var(--glass-bg); backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border);
+            padding: 4rem 6rem; border-radius: 20px; box-shadow: var(--glass-shadow);
+        }
+        h1 {
+            font-size: 4rem; margin: 0; letter-spacing: 6px;
+            color: var(--dark-contrast); text-transform: uppercase;
+        }
+        .subtitle {
+            font-size: 1.2rem; color: var(--accent-gold); letter-spacing: 3px;
+            margin-top: 10px; font-weight: bold;
+        }
+
+        /* --- SECTIONS & GLASS CARDS --- */
+        section { padding: 80px 5vw; display: flex; flex-direction: column; align-items: center; }
+        
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 50px; box-shadow: var(--glass-shadow);
+            max-width: 1000px; width: 100%; margin-bottom: 40px;
+            opacity: 0; transform: translateY(60px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .glass-card.visible { opacity: 1; transform: translateY(0); }
+        .glass-card:hover { box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12); }
+
+        .glass-card h2 {
+            color: var(--dark-contrast); font-size: 2.5rem;
+            border-bottom: 3px solid var(--accent-gold); padding-bottom: 12px; margin-top: 0;
+            display: inline-block;
+        }
+        .glass-card p { font-size: 1.15rem; line-height: 1.9; color: #333; margin-bottom: 25px; }
+
+        /* --- STATS GRID --- */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px; margin-top: 30px;
+        }
+        .stat-item {
+            background: rgba(255, 255, 255, 0.5); padding: 25px 20px;
+            border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.8);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .stat-item:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.8); }
+        .stat-value { font-size: 2.2rem; font-weight: bold; color: var(--accent-gold); }
+        .stat-label {
+            font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--dark-contrast); margin-top: 8px; font-weight: 600;
+        }
+
+        /* --- DARK SECTION --- */
+        .dark-section {
+            background: var(--dark-contrast); color: #fff; position: relative; width: 100%;
+        }
+        .dark-section .glass-card {
+            background: rgba(25, 25, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        .dark-section .glass-card h2 { color: #fff; border-bottom-color: var(--accent-gold); }
+        .dark-section .glass-card p { color: #ddd; }
+        .dark-section .stat-item { background: rgba(0, 0, 0, 0.4); border-color: rgba(255, 255, 255, 0.1); }
+        .dark-section .stat-item:hover { background: rgba(0, 0, 0, 0.6); }
+        .dark-section .stat-label { color: #aaa; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .top-nav { flex-direction: column; padding: 15px; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .nav-links a { font-size: 0.8rem; }
+            
+            .hero-glass {
+                flex-direction: column; padding: 2rem; text-align: center;
+                gap: 20px; width: 85%;
+            }
+            h1 { font-size: 2.5rem; letter-spacing: 3px; }
+            .subtitle { font-size: 1rem; letter-spacing: 1px; }
+
+            section { padding: 80px 5vw; }
+            .glass-card { padding: 30px 20px; }
+            .glass-card h2 { font-size: 2rem; }
+            .glass-card p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader"><div class="spinner"></div></div>
+
+    <nav class="top-nav">
+        <div class="nav-logo">LEONA</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="interior.html">Interior</a>
+            <a href="technical.html">Technical</a>
+            <a href="bridge.html">Bridge</a>
+            <a href="engine-room.html">Engine Room</a>
+        </div>
+    </nav>
+
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+
+    <header>
+        <div class="parallax-bg" id="parallax"></div>
+        <div class="hero-glass observer-item">
+            <h1>Engine Room</h1>
+            <div class="subtitle">The Heart of the Vessel</div>
+        </div>
+    </header>
+
+    <section>
+        <div class="glass-card observer-item">
+            <h2>Twin MTU Powerplants</h2>
+            <p>Superyacht engine rooms are designed to be as immaculate as the guest spaces above them, featuring gleaming white paint, chrome piping, and diamond-plate decking. At the center of Leona's machinery space sit two massive MTU 16V 4000 M73 diesel engines.</p>
+            <p>These 16-cylinder beasts generate an astonishing 2,560 kW of power each. When pushed to maximum RPM, they deliver the heavy torque required to propel the 1,730 GT steel hull to a top speed of 19 knots.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">2x MTU</div>
+                    <div class="stat-label">Main Engines</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">6,800+</div>
+                    <div class="stat-label">Total Horsepower</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">168,000 L</div>
+                    <div class="stat-label">Fuel Capacity</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dark-section">
+        <div class="glass-card observer-item">
+            <h2>IMO Tier III Compliance</h2>
+            <p>Despite her immense power, Leona is engineered for modern environmental responsibility. The engine room is equipped with a highly advanced 100% clean air exhaust system.</p>
+            <p>By utilizing Selective Catalytic Reduction (SCR) technology, the exhaust gases are treated before they ever leave the ship. This process drastically reduces nitrogen oxide (NOx) emissions, allowing Leona to operate freely in the world's most protected and strictly regulated marine environments.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="glass-card observer-item">
+            <h2>Generators & Auxiliary Systems</h2>
+            <p>A floating palace requires a small power plant just to keep the lights on and the massive air conditioning systems running. Flanking the main engines are heavy-duty Caterpillar generators that supply the yacht's hotel load.</p>
+            <p>The space also houses high-capacity reverse-osmosis watermakers capable of producing thousands of liters of fresh water daily, alongside the hydraulic power packs that drive the zero-speed stabilizers, bow thrusters, and the beach club's folding sea terraces.</p>
+        </div>
+    </section>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; }, 800);
+        });
+
+        window.addEventListener('scroll', () => {
+            const parallaxBg = document.getElementById('parallax');
+            let scrollPosition = window.pageYOffset;
+            parallaxBg.style.transform = 'translateY(' + scrollPosition * 0.4 + 'px)';
+        });
+
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.observer-item').forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
