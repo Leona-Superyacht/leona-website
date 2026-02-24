@@ -6,6 +6,9 @@
     <title>Leona Interior | Bilgin Yachts</title>
     <style>
         /* CSS Variables - Keeping your vibrant red accent */
+        * {
+            box-sizing:border-box;
+        }
         :root {
             --bg-color: #f8f9fa;
             --text-main: #222222;
@@ -153,6 +156,63 @@
             transform: scale(1.08); /* Slight zoom on hover */
         }
 
+                /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            /* 1. Stack the navigation links and make them smaller */
+            .top-nav {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+
+            /* 2. Stack the logo and title in the hero section */
+            .hero-glass {
+                flex-direction: column;
+                padding: 2rem;
+                text-align: center;
+                gap: 20px;
+                width: 85%; /* Prevents it from touching the screen edges */
+                box-sizing: border-box;
+            }
+            .hero-logo {
+                width: 120px; /* Shrink the logo */
+            }
+            .hero-text {
+                align-items: center; /* Center the text under the logo */
+            }
+            
+            /* 3. Shrink the massive typography */
+            h1 {
+                font-size: 2.8rem;
+                letter-spacing: 3px;
+            }
+            .subtitle {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+
+            /* 4. Reduce padding inside the sections and glass cards */
+            section {
+                padding: 80px 5vw;
+            }
+            .glass-card {
+                padding: 30px 20px;
+            }
+            .glass-card h2 {
+                font-size: 2rem;
+            }
+            .glass-card p {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
