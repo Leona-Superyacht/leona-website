@@ -156,6 +156,36 @@
             transform: scale(1.08); /* Slight zoom on hover */
         }
 
+        /* --- DARK SECTION --- */
+        .dark-section {
+            background: var(--dark-contrast); 
+            color: #fff; 
+            position: relative; 
+            width: 100%;
+        }
+        .dark-section .glass-card {
+            background: rgba(25, 25, 25, 0.7); 
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        .dark-section .glass-card h2 { 
+            color: #fff; 
+            border-bottom-color: var(--accent-gold); 
+        }
+        .dark-section .glass-card p { 
+            color: #ddd; 
+        }
+        .dark-section .stat-item { 
+            background: rgba(0, 0, 0, 0.4); 
+            border-color: rgba(255, 255, 255, 0.1); 
+        }
+        .dark-section .stat-item:hover { 
+            background: rgba(0, 0, 0, 0.6); 
+        }
+        .dark-section .stat-label { 
+            color: #aaa; 
+        }
+
                 /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
             /* 1. Stack the navigation links and make them smaller */
@@ -250,11 +280,7 @@
             <p>One of the most notable layout choices is the reduction of guest cabins. Instead of the typical four cabins on the lower deck, Leona features only two massive VIP staterooms, prioritizing extraordinary volume and personal space for her guests.</p>
         </div>
 
-        <div class="glass-card observer-item">
-            <h2>The Iconic Beach Club</h2>
-            <p>The crown jewel of Leona's interior is undeniably the beach club. Spanning a massive footprint, it is centered around an 8.7-meter mosaic pool flanked by classical Grecian statues pouring water into the basin.</p>
-            <p>Look up, and the ceiling comes alive—a custom fiber-optic installation by Barrisol recreates a starry night sky. The area also boasts a dedicated shisha lounge featuring folding sea terraces, seamlessly blending the opulent interior with the ocean outside.</p>
-        </div>
+        
 
         <div class="glass-card observer-item">
             <h2>Interior Gallery</h2>
@@ -271,6 +297,14 @@
                     <img src="umbrella-stairs.png">
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="dark-section">
+        <div class="glass-card observer-item">
+            <h2>The Iconic Beach Club</h2>
+            <p>The crown jewel of Leona's interior is undeniably the beach club. Spanning a massive footprint, it is centered around an 8.7-meter mosaic pool flanked by classical Grecian statues pouring water into the basin.</p>
+            <p>Look up, and the ceiling comes alive—a custom fiber-optic installation by Barrisol recreates a starry night sky. The area also boasts a dedicated shisha lounge featuring folding sea terraces, seamlessly blending the opulent interior with the ocean outside.</p>
         </div>
     </section>
 
