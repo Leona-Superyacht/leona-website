@@ -164,11 +164,44 @@
         .dark-section .stat-item:hover { background: rgba(0, 0, 0, 0.6); }
         .dark-section .stat-label { color: #aaa; }
 
+        /* --- SPLIT CONTENT LAYOUT (Text Left, Image Right) --- */
+        .split-layout {
+            display: flex;
+            align-items: center; /* Vertically centers the text with the image */
+            gap: 40px; /* Space between the text block and the image */
+            margin-bottom: 30px; /* Adds space between this section and the stats grid below it */
+        }
+
+        .split-text {
+            flex: 1; /* This tells the text to fill the available space */
+        }
+
+        .split-image-container {
+            flex: 0 0 45%; /* Sets the image container to take up 45% of the width */
+        }
+
+        .split-image-container img {
+            width: 100%; /* Ensures image fits its container */
+            height: auto;
+            border-radius: 15px; /* Matches your theme's rounded corners */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Adds a subtle pop */
+            object-fit: cover;
+        }
+
         /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
             .top-nav { flex-direction: column; padding: 15px; gap: 15px; }
             .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
             .nav-links a { font-size: 0.8rem; }
+
+            .split-layout {
+                flex-direction: column; /* Stack text on top of image on phones */
+                gap: 20px;
+            }
+            .split-image-container {
+                flex: 0 0 100%; /* Make image full width on mobile */
+                width: 100%;
+            }
             
             .hero-glass {
                 flex-direction: column; padding: 2rem; text-align: center;
@@ -212,10 +245,18 @@
 
     <section>
         <div class="glass-card observer-item">
-            <h2>Twin MTU Powerplants</h2>
-            <p>Superyacht engine rooms are designed to be as immaculate as the guest spaces above them, featuring gleaming white paint, chrome piping, and diamond-plate decking. At the center of Leona's machinery space sit two massive MTU 16V 4000 M73 diesel engines.</p>
-            <p>These 16-cylinder beasts generate an astonishing 2,560 kW of power each. When pushed to maximum RPM, they deliver the heavy torque required to propel the 1,730 GT steel hull to a top speed of 19 knots.</p>
-            
+            <div class="split-layout">
+                
+                <div class="split-text">
+                    <h2>Twin MTU Powerplants</h2>
+                    <p>Superyacht engine rooms are designed to be as immaculate as the guest spaces above them, featuring gleaming white paint, chrome piping, and diamond-plate decking. At the center of Leona's machinery space sit two massive MTU 16V 4000 M73 diesel engines.</p>
+                    <p>These 16-cylinder beasts generate an astonishing 2,560 kW of power each. When pushed to maximum RPM, they deliver the heavy torque required to propel the 1,730 GT steel hull to a top speed of 19 knots.</p>
+                </div>
+
+                <div class="split-image-container">
+                    <img src="https://www.mtu-solutions.com/content/dam/mtu/products/engines/diesel-engines/4000/series-4000-m05-tb/MTU_Series_4000_M05.jpg/_jcr_content/renditions/original./MTU_Series_4000_M05.jpg" alt="MTU 16V 4000 Engine">
+                </div>
+            </div>
             <div class="stats-grid">
                 <div class="stat-item">
                     <div class="stat-value">2x MTU</div>
