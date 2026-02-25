@@ -148,6 +148,30 @@
             color: var(--dark-contrast); margin-top: 8px; font-weight: 600;
         }
 
+        /* --- SPLIT CONTENT LAYOUT --- */
+        .split-layout {
+            display: flex;
+            align-items: center; 
+            gap: 40px; 
+            margin-bottom: 30px; 
+        }
+
+        .split-text {
+            flex: 1; 
+        }
+
+        .split-image-container {
+            flex: 0 0 45%; 
+        }
+
+        .split-image-container img {
+            width: 100%; 
+            height: auto;
+            border-radius: 15px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            object-fit: cover;
+        }
+
         /* --- DARK SECTION --- */
         .dark-section {
             background: var(--dark-contrast); color: #fff; position: relative; width: 100%;
@@ -169,6 +193,14 @@
                 flex-direction: column;
                 padding: 15px;
                 gap: 15px;
+            }
+            .split-layout {
+                flex-direction: column; 
+                gap: 20px;
+            }
+            .split-image-container {
+                flex: 0 0 100%; 
+                width: 100%;
             }
             .nav-links {
                 flex-wrap: wrap;
@@ -253,9 +285,20 @@
 
     <section>
         <div class="glass-card observer-item">
-            <h2>Integrated "Glass Bridge" System</h2>
-            <p>Leona's command center is defined by a state-of-the-art Integrated Bridge System (IBS). Gone are the days of scattered analog dials; the helm is dominated by ultra-high-definition, multi-function touch displays. These panels consolidate radar, sonar, engine telemetry, and CCTV into a single, highly customizable interface.</p>
-            <p>This layout not only provides a sleek, futuristic aesthetic but also drastically improves situational awareness. The captain can configure the layout of the screens on the fly, instantly calling up critical data where and when it is needed most.</p>
+            
+            <div class="split-layout">
+                
+                <div class="split-text">
+                    <h2>Integrated "Glass Bridge" System</h2>
+                    <p>Leona's command center is defined by a state-of-the-art Integrated Bridge System (IBS). Gone are the days of scattered analog dials; the helm is dominated by ultra-high-definition, multi-function touch displays. These panels consolidate radar, sonar, engine telemetry, and CCTV into a single, highly customizable interface.</p>
+                    <p>This layout not only provides a sleek, futuristic aesthetic but also drastically improves situational awareness. The captain can configure the layout of the screens on the fly, instantly calling up critical data where and when it is needed most.</p>
+                </div>
+
+                <div class="split-image-container">
+                    <img src="Screen.png">
+                </div>
+                
+            </div>
         </div>
 
         <div class="glass-card observer-item">
