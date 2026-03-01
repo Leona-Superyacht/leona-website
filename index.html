@@ -286,6 +286,21 @@
             color: var(--accent-gold);
         }
 
+        /* --- OFFICIAL SITE LINK --- */
+        .official-link {
+            text-decoration: none;
+            color: var(--dark-contrast);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+
+        .official-link:hover {
+            color: var(--accent-gold); /* Turns red on hover */
+        }
+
         /* The Slide-out Panel */
         .side-panel {
             position: fixed;
@@ -424,6 +439,7 @@
             <button id="menu-btn" class="menu-btn">&#9776;</button>
             <div class="nav-logo">LEONA</div>
         </div>
+        <a href="https://bilginyacht.com/" target="_blank" class="official-link">Visit Official Site</a>
     </nav>
 
     <div id="side-panel" class="side-panel">
