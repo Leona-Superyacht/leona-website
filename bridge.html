@@ -55,13 +55,102 @@
             font-size: 1.5rem; font-weight: bold; color: var(--dark-contrast);
             letter-spacing: 3px; text-transform: uppercase;
         }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a {
-            text-decoration: none; color: var(--dark-contrast); font-weight: 600;
-            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px;
+        /* --- NEW NAVIGATION & SIDE PANEL --- */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--dark-contrast);
+            cursor: pointer;
+            padding: 0;
             transition: color 0.3s ease;
         }
-        .nav-links a:hover { color: var(--accent-gold); }
+
+        .menu-btn:hover {
+            color: var(--accent-gold);
+        }
+
+        /* The Slide-out Panel */
+        .side-panel {
+            position: fixed;
+            top: 0;
+            left: -320px; /* Hides the panel off the left edge */
+            width: 320px;
+            max-width: 85vw; /* Prevents it from being too wide on small phones */
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-right: 1px solid var(--glass-border);
+            z-index: 10001; /* Sits above the top nav */
+            box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+            transition: left 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 30px;
+        }
+
+        .side-panel.open {
+            left: 0; /* Slides the panel into view */
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2.5rem;
+            color: var(--dark-contrast);
+            cursor: pointer;
+            align-self: flex-end; /* Pushes the X button to the right */
+            margin-bottom: 40px;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-gold);
+        }
+
+        .side-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .side-nav-links a {
+            text-decoration: none;
+            color: var(--dark-contrast);
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .side-nav-links a:hover {
+            color: var(--accent-gold);
+            transform: translateX(10px); /* Creates a cool sliding bump effect on hover */
+        }
+
+        /* The Darkened Overlay */
+        .panel-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        
+        .panel-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
 
         /* --- AMBIENT FLOATING ORBS --- */
         .bg-circle {
@@ -189,11 +278,7 @@
                 /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
             /* 1. Stack the navigation links and make them smaller */
-            .top-nav {
-                flex-direction: column;
-                padding: 15px;
-                gap: 15px;
-            }
+            
             .split-layout {
                 flex-direction: column; 
                 gap: 20px;
@@ -202,14 +287,7 @@
                 flex: 0 0 100%; 
                 width: 100%;
             }
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-            .nav-links a {
-                font-size: 0.8rem;
-            }
+            
 
             /* 2. Stack the logo and title in the hero section */
             .hero-glass {
@@ -262,15 +340,24 @@
     </div>
 
     <nav class="top-nav">
-        <div class="nav-logo">LEONA</div>
-        <div class="nav-links">
+        <div class="nav-left">
+            <button id="menu-btn" class="menu-btn">&#9776;</button>
+            <div class="nav-logo">LEONA</div>
+        </div>
+    </nav>
+
+    <div id="side-panel" class="side-panel">
+        <button id="close-btn" class="close-btn">&times;</button>
+        <div class="side-nav-links">
             <a href="index.html">Home</a>
             <a href="interior.html">Interior</a>
             <a href="technical.html">Technical</a>
             <a href="bridge.html">Bridge</a>
             <a href="engine-room.html">Engine Room</a>
         </div>
-    </nav>
+    </div>
+
+    <div id="panel-overlay" class="panel-overlay"></div>
 
     <div class="bg-circle bg-circle-1"></div>
     <div class="bg-circle bg-circle-2"></div>
@@ -361,6 +448,26 @@
         document.querySelectorAll('.observer-item').forEach(item => {
             observer.observe(item);
         });
+        // Side Panel Toggle Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const sidePanel = document.getElementById('side-panel');
+        const overlay = document.getElementById('panel-overlay');
+
+        function openPanel() {
+            sidePanel.classList.add('open');
+            overlay.classList.add('visible');
+        }
+
+        function closePanel() {
+            sidePanel.classList.remove('open');
+            overlay.classList.remove('visible');
+        }
+
+        // Event Listeners
+        menuBtn.addEventListener('click', openPanel);
+        closeBtn.addEventListener('click', closePanel);
+        overlay.addEventListener('click', closePanel); // Closes menu if you click the background
     </script>
 </body>
 </html>
